@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js (ONLY ONCE) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+    body{
+        background:#f4f6f5;
+        font-family:Segoe UI;
+    }
+
+    .container{
+        margin-top:30px;
+    }
+
+    .card{
+        border:none;
+        border-radius:12px;
+        box-shadow:0 6px 16px rgba(0,0,0,0.1);
+        transition:0.3s;
+    }
+
+    .card:hover{
+        transform:translateY(-5px);
+    }
+
+    .table{
+        background:white;
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🔥 AI ANALYTICS -->
+    <h2>📊 AI Feedback Analytics</h2>
+
+    <p>⭐ Average Rating: <b>{{ avg_rating }}</b></p>
+    <p>✅ Accuracy: <b>{{ accuracy }}%</b></p>
+    <p>📈 Total Feedback: <b>{{ total_feedback }}</b></p>
+
+    <!-- BAR CHART -->
+    <canvas id="chart" height="100"></canvas>
+
+    <br><br>
+
+    <!-- PIE CHART -->
+    <h4>🥧 Accuracy Distribution</h4>
+    <div style="width: 400px; height: 400px; margin:auto;">
+    <canvas id="pieChart"></canvas>
+</div>
+
+
+    <br><br>
+
+    <!-- LINE CHART -->
+    <h4>📈 Feedback Trend (Daily)</h4>
+    <canvas id="lineChart" height="100"></canvas>
+
+    <br><br>
+
+    <!-- 🔥 DASHBOARD CARDS -->
+    <h2 class="mb-4">Admin Dashboard</h2>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>Total Users</h5>
+                <h2>{{ users|length }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>Total Activities</h5>
+                <h2>{{ activities|length }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <!-- 🔥 USERS TABLE -->
+    <h4>Users</h4>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+        </tr>
+
+        {% for u in users %}
+        <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.role }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <!-- 🔥 ACTIVITY LOGS -->
+    <h4>Activity Logs</h4>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>User ID</th>
+            <th>Module</th>
+            <th>Input</th>
+            <th>Result</th>
+        </tr>
+
+        {% for a in activities %}
+        <tr>
+            <td>{{ a.user_id }}</td>
+            <td>{{ a.module }}</td>
+            <td>{{ a.input_data }}</td>
+            <td>{{ a.result }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <a href="/dashboard" class="btn btn-success">⬅ Back to Dashboard</a>
+
+</div>
+
+<!-- 🔥 ALL CHARTS SCRIPT (ONLY ONCE, AT END) -->
+<script>
+window.onload = function() {
+
+    // BAR CHART
+    new Chart(document.getElementById('chart'), {
+        type: 'bar',
+        data: {
+            labels: ['Avg Rating', 'Accuracy'],
+            datasets: [{
+                label: 'AI Metrics',
+                data: [{{ avg_rating }}, {{ accuracy }}],
+                backgroundColor: ['blue', 'green']
+            }]
+        }
+    });
+
+    // PIE CHART
+    new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Correct', 'Wrong'],
+            datasets: [{
+                data: [{{ correct }}, {{ wrong }}],
+                backgroundColor: ['green', 'red']
+            }]
+        }
+    });
+
+    // LINE CHART
+    new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: {{ dates|tojson }},
+            datasets: [{
+                label: 'Feedback Count',
+                data: {{ counts|tojson }},
+                borderColor: 'blue',
+                fill: false
+            }]
+        }
+    });
+
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AgriOS Dashboard</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+/* GLOBAL */
+body{
+    margin:0;
+    font-family:'DM Sans', sans-serif;
+    background:#EEF2F3;
+    color:#1C2B1A;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:260px;
+    height:100vh;
+    background:#1A1208;
+    position:fixed;
+    padding:20px;
+    color:#fff;
+}
+
+/* LOGO */
+.logo-text{
+    font-family:'Syne';
+    font-weight:800;
+    font-size:16px;
+}
+
+.logo-sub{
+    font-size:11px;
+    color:#aaa;
+}
+
+/* MENU */
+.menu-title{
+    margin-top:20px;
+    font-size:11px;
+    color:#888;
+    letter-spacing:1px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    border-radius:10px;
+    color:#ccc;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    background:#2D4A1E;
+    color:#8FCA6A;
+}
+
+/* PROFILE */
+.profile{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    right:20px;
+    background:#2a1f12;
+    padding:10px;
+    border-radius:12px;
+    display:flex;
+    gap:10px;
+}
+
+.circle{
+    width:40px;
+    height:40px;
+    background:#8FCA6A;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:600;
+}
+
+/* MAIN */
+.main{
+    margin-left:280px;
+    padding:30px;
+}
+
+/* HEADER */
+.page-title{
+    font-family:'Syne';
+    font-size:22px;
+    font-weight:700;
+}
+
+.pill{
+    background:#E5E7EB;
+    padding:8px 14px;
+    border-radius:20px;
+}
+
+/* KPI */
+.kpi{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.kpi-box{
+    padding:18px;
+    border-radius:14px;
+    font-size:13px;
+}
+
+.stat-value{
+    font-family:'Syne';
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.k1{background:#E7F4EA}
+.k2{background:#E8EEF6}
+.k3{background:#F6EFE5}
+.k4{background:#F1F5F9}
+
+/* WEATHER */
+.weather{
+    margin-top:20px;
+    background:linear-gradient(135deg,#2D4A1E,#3D6B2C);
+    color:white;
+    padding:25px;
+    border-radius:18px;
+}
+
+.temp{
+    font-family:'Syne';
+    font-size:52px;
+    font-weight:800;
+    letter-spacing:-2px;
+}
+
+/* QUICK */
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.quick-card{
+    background:#f4f7f3;
+    padding:20px;
+    border-radius:16px;
+    text-align:center;
+}
+
+.quick-card button{
+    margin-top:10px;
+    background:#2D4A1E;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+}
+
+/* GRID */
+.grid-3{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:20px;
+}
+
+/* SECTION */
+.section{
+    margin-top:20px;
+    background:white;
+    padding:20px;
+    border-radius:14px;
+}
+
+/* SOIL */
+.bar{height:6px;background:#ddd;border-radius:10px}
+.fill{height:6px;border-radius:10px}
+
+/* ALERT */
+.alert-box{
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:10px;
+}
+
+.a1{background:#fff4e5}
+.a2{background:#fdecea}
+.a3{background:#e6f4ea}
+.a4{background:#e8eef6}
+.logout-btn{
+    display:block;
+    margin-top:20px;
+    padding:10px;
+    border-radius:10px;
+    text-align:center;
+    background:#033613;
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    transition:0.2s;
+}
+
+.logout-btn:hover{
+    background:#0e3505;
+}
+.quick-grid-pro{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-top:10px;
+}
+
+.quick-card-pro{
+    background:#f4f7f3;
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
+    border:1px solid #dfe5dc;
+    transition:0.3s;
+}
+
+.quick-card-pro:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.quick-card-pro .icon{
+    font-size:26px;
+    margin-bottom:10px;
+    background:#e6efe3;
+    padding:12px;
+    border-radius:12px;
+    display:inline-block;
+}
+
+.quick-card-pro h5{
+    margin:10px 0;
+    font-size:14px;
+}
+
+.quick-card-pro button{
+    margin-top:10px;
+    background:#2D4A1E;
+    color:white;
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.quick-card-pro button:hover{
+    background:#3D6B2C;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+<a href="/dashboard">Dashboard</a>    
+
+<div class="logo-text">AgriOS</div>
+<div class="logo-sub">SMART FARMING PLATFORM</div>
+
+<div class="menu-title">OVERVIEW</div>
+<a class="active">Dashboard</a>
+
+<div class="menu-title">FARM MODULES</div>
+<a href="/crop">Crop Recommendation</a>
+<a href="/irrigation">Smart Irrigation</a>
+<a href="/disease">Disease Detection</a>
+<a href="/market">Market Forecast</a>
+<a href="/yield">Yield Prediction</a>
+
+<div class="menu-title">MANAGEMENT</div>
+<a href="/subsidy">Subsidies</a>
+<a href="/admin">Admin Panel</a>
+
+<a href="/logout" class="logout-btn">
+    🚪 Logout
+</a>
+
+<div class="profile">
+<div class="circle">
+    {{ username[0] | upper }}
+</div>
+
+<div>
+<b>{{ username }}</b><br>
+
+{% if role == "admin" %}
+<small>Administrator</small>
+{% else %}
+<small>User</small>
+{% endif %}
+
+</div>
+</div>
+
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<div style="display:flex;justify-content:space-between;">
+<div>
+<div class="page-title">Analytics Dashboard</div>
+<small>Real-time overview</small>
+</div>
+<div class="pill" id="time"></div>
+</div>
+
+<!-- KPI -->
+<div class="kpi">
+<div class="kpi-box k1">Total Modules<br><div class="stat-value">08</div></div>
+<div class="kpi-box k2">ML Models<br><div class="stat-value">05</div></div>
+<div class="kpi-box k3">Forecast<br><div class="stat-value">Active</div></div>
+<div class="kpi-box k4">System<br><div class="stat-value">Online</div></div>
+</div>
+
+<!-- WEATHER -->
+<div class="weather">
+<div class="temp" id="temp">--°C</div>
+<p id="desc">Loading...</p>
+<p>Humidity: <span id="humidity"></span>% | Wind: <span id="wind"></span></p>
+
+<div id="forecast" style="display:flex;gap:15px;margin-top:15px;"></div>
+</div>
+
+<!-- QUICK -->
+<h3>🚀 Quick Access</h3>
+
+<div class="quick-grid-pro">
+
+    <div class="quick-card-pro">
+        <div class="icon">🌱</div>
+        <h5>Crop Recommendation</h5>
+        <button onclick="location.href='/crop'">Open</button>
+    </div>
+
+    <div class="quick-card-pro">
+        <div class="icon">🔬</div>
+        <h5>Disease Detection</h5>
+        <button onclick="location.href='/disease'">Open</button>
+    </div>
+
+    <div class="quick-card-pro">
+        <div class="icon">💧</div>
+        <h5>Smart Irrigation</h5>
+        <button onclick="location.href='/irrigation'">Open</button>
+    </div>
+
+    <div class="quick-card-pro">
+        <div class="icon">📈</div>
+        <h5>Market Forecast</h5>
+        <button onclick="location.href='/market'">Open</button>
+    </div>
+
+    <div class="quick-card-pro">
+        <div class="icon">🌾</div>
+        <h5>Yield Prediction</h5>
+        <button onclick="location.href='/yield'">Open</button>
+    </div>
+
+    <div class="quick-card-pro">
+        <div class="icon">🏛️</div>
+        <h5>Subsidies</h5>
+        <button onclick="location.href='/subsidy'">Open</button>
+    </div>
+
+    <div class="quick-card-pro">
+        <div class="icon">🛡️</div>
+        <h5>Admin Panel</h5>
+        <button onclick="location.href='/admin'">Open</button>
+    </div>
+
+</div>
+
+<!-- GRID -->
+<div class="grid-3">
+
+<!-- CHART -->
+<div class="section">
+<h4>Usage Analytics</h4>
+<canvas id="chart"></canvas>
+</div>
+
+<!-- SOIL -->
+<div class="section">
+<h4>Soil Health</h4>
+
+<p>Nitrogen (N) 72%</p>
+<div class="bar"><div class="fill" style="width:72%;background:#3D6B2C"></div></div>
+
+<p>Phosphorus (P) 58%</p>
+<div class="bar"><div class="fill" style="width:58%;background:#D4A843"></div></div>
+
+<p>Potassium (K) 85%</p>
+<div class="bar"><div class="fill" style="width:85%;background:#3D6B2C"></div></div>
+
+<p>Soil Moisture 43%</p>
+<div class="bar"><div class="fill" style="width:43%;background:#3A82B5"></div></div>
+
+<p>pH Level 6.8</p>
+<div class="bar"><div class="fill" style="width:68%;background:#3D6B2C"></div></div>
+
+</div>
+
+<!-- ALERT -->
+<div class="section">
+<h4>Farm Alerts</h4>
+
+<div class="alert-box a1">⚠ Low Soil Moisture<br>Field B below 30% — irrigation recommended<br><small>2h ago</small></div>
+
+<div class="alert-box a2">🦠 Blight Risk Detected<br>Wheat in Field C — high humidity<br><small>5h ago</small></div>
+
+<div class="alert-box a3">✅ Harvest Ready<br>Soybean Field A — optimal conditions<br><small>1d ago</small></div>
+
+<div class="alert-box a4">💰 Wheat Price Up 8%<br>₹2,340/quintal today<br><small>6h ago</small></div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+// CLOCK
+setInterval(()=>{
+document.getElementById("time").innerText=new Date().toLocaleTimeString();
+},1000);
+
+// WEATHER
+const apiKey = "6824f62efa9949c0a87132345263003";
+
+async function getWeather(){
+    try{
+        const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=Bhopal`);
+        const d = await response.json();
+
+        console.log(d); // optional debug
+
+        if(d.error){
+            document.getElementById("desc").innerText = d.error.message;
+            return;
+        }
+
+        document.getElementById("temp").innerText = Math.round(d.current.temp_c) + "°C";
+        document.getElementById("desc").innerText = d.current.condition.text;
+        document.getElementById("humidity").innerText = d.current.humidity;
+        document.getElementById("wind").innerText = d.current.wind_kph + " km/h";
+        
+        fetch("/save-weather", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                city: d.location.name,
+                temp: d.current.temp_c,
+                condition: d.current.condition.text
+            })
+        });
+
+    }catch(err){
+        document.getElementById("desc").innerText = "API Error";
+        console.error(err);
+    }
+}
+
+
+async function getForecast(){
+    try{
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=Bhopal&days=5`);
+        const data = await response.json();
+
+        const forecastDiv = document.getElementById("forecast");
+        forecastDiv.innerHTML = "";
+
+        data.forecast.forecastday.forEach(day => {
+            const date = new Date(day.date);
+            const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+
+            const card = document.createElement("div");
+            card.style.textAlign = "center";
+
+            card.innerHTML = `
+            <p>${dayName}</p>
+            <img src="https:${day.day.condition.icon}" width="40">
+            <p>${Math.round(day.day.maxtemp_c)}° / ${Math.round(day.day.mintemp_c)}°</p>
+            `;
+            card.style.cursor = "pointer";
+            card.onclick = () => {
+                document.getElementById("temp").innerText = Math.round(day.day.avgtemp_c) + "°C";
+                document.getElementById("desc").innerText = day.day.condition.text;
+                document.getElementById("humidity").innerText = day.day.avghumidity;
+                document.getElementById("wind").innerText = day.day.maxwind_kph + " km/h";
+            };
+
+            forecastDiv.appendChild(card);
+        });
+
+    }catch(err){
+        console.error("Forecast Error:", err);
+    }
+}
+
+getLocationAndWeather();
+function getLocationAndWeather(){
+    navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        getWeatherByCoords(lat, lon);
+        getForecastByCoords(lat, lon);
+    }, () => {
+        // fallback if location denied
+        getWeather();
+        getForecast();
+    });
+}
+async function getWeatherByCoords(lat, lon){
+    const res = await fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`);
+    const d = await res.json();
+
+    document.getElementById("temp").innerText = Math.round(d.current.temp_c) + "°C";
+    document.getElementById("desc").innerText = d.current.condition.text;
+    document.getElementById("humidity").innerText = d.current.humidity;
+    document.getElementById("wind").innerText = d.current.wind_kph + " km/h";
+}
+
+async function getForecastByCoords(lat, lon){
+    const res = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${lon}&days=5`);
+    const data = await res.json();
+
+    const forecastDiv = document.getElementById("forecast");
+    forecastDiv.innerHTML = "";
+
+    data.forecast.forecastday.forEach(day => {
+        const date = new Date(day.date);
+        const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+
+        const card = document.createElement("div");
+        card.style.textAlign = "center";
+        card.style.cursor = "pointer";
+
+        card.innerHTML = `
+            <p>${dayName}</p>
+            <img src="https:${day.day.condition.icon}" width="40">
+            <p>${Math.round(day.day.maxtemp_c)}° / ${Math.round(day.day.mintemp_c)}°</p>
+        `;
+
+        card.onclick = () => {
+            document.getElementById("temp").innerText = Math.round(day.day.avgtemp_c) + "°C";
+            document.getElementById("desc").innerText = day.day.condition.text;
+            document.getElementById("humidity").innerText = day.day.avghumidity;
+            document.getElementById("wind").innerText = day.day.maxwind_kph + " km/h";
+        };
+
+        forecastDiv.appendChild(card);
+    });
+}
+
+// CHART
+new Chart(document.getElementById("chart"), {
+type:'bar',
+data:{
+labels: {{ labels | tojson }},
+datasets:[{
+    label: "Usage",
+    data: {{ values | tojson }},
+    backgroundColor: "rgba(54, 162, 235, 0.6)"
+}]
+}
+});
+</script>
+
+<!-- FLOATING CHAT BUTTON -->
+<button onclick="window.open('http://127.0.0.1:5050','_blank')" 
+style="
+position: fixed;
+bottom: 20px;
+right: 20px;
+background: #2D4A1E;
+color: white;
+border: none;
+padding: 14px 18px;
+border-radius: 50px;
+font-size: 16px;
+cursor: pointer;
+box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+z-index: 999;
+">
+💬 Chat
+</button>
+
+</body>
+</html>

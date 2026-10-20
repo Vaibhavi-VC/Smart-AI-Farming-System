@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AgriOS | Smart Farming Platform</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* GLOBAL */
+body{
+    margin:0;
+    font-family:'DM Sans', sans-serif;
+    background: radial-gradient(circle at top left, #2D4A1E, #1A1208);
+    color:#FFFFFF;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* MAIN LAYOUT */
+.container{
+    display:flex;
+    width:90%;
+    max-width:1200px;
+    gap:60px;
+}
+
+/* LEFT SIDE */
+.left{
+    flex:1;
+}
+
+.logo{
+    font-family:'Syne';
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.tagline{
+    font-size:12px;
+    letter-spacing:1px;
+    color:#8FCA6A;
+    margin-bottom:20px;
+}
+
+.headline{
+    font-family:'Syne';
+    font-size:42px;
+    font-weight:800;
+    letter-spacing:-1.5px;
+}
+
+.highlight{
+    background: linear-gradient(90deg, #8FCA6A, #D4A843);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.desc{
+    font-size:14.5px;
+    color:rgba(255,255,255,0.6);
+    margin:20px 0;
+    line-height:1.6;
+}
+
+.features p{
+    font-size:13.5px;
+    margin:8px 0;
+}
+
+/* RIGHT SIDE CARD */
+.card{
+    flex:1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding:30px;
+}
+
+/* TITLE */
+.card h3{
+    font-family:'Syne';
+    font-weight:700;
+    letter-spacing:-0.5px;
+}
+
+/* FORM */
+label{
+    font-size:11.5px;
+    letter-spacing:0.8px;
+    color:rgba(255,255,255,0.5);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    margin-bottom:16px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.06);
+    color:white;
+}
+
+input:focus{
+    outline:none;
+    border-color:#5A9B3A;
+    background: rgba(90,155,58,0.08);
+    box-shadow:0 0 0 3px rgba(90,155,58,0.12);
+}
+
+/* BUTTON */
+.btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(90deg, #3D6B2C, #5A9B3A);
+    color:white;
+    font-family:'Syne';
+    font-weight:700;
+    letter-spacing:0.3px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+/* LINKS */
+.links{
+    margin-top:15px;
+    font-size:13px;
+    text-align:center;
+}
+
+.links a{
+    color:#8FCA6A;
+    text-decoration:none;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .container{
+        flex-direction:column;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="left">
+        <div class="logo">AgriOS</div>
+        <div class="tagline">SMART FARMING PLATFORM</div>
+
+        <div class="headline">
+            Farm Smarter.<br>
+            <span class="highlight">Grow Better.</span>
+        </div>
+
+        <div class="desc">
+            AI-powered tools for crop recommendation, disease detection, smart irrigation, and yield prediction — all in one platform built for Indian farmers.
+        </div>
+
+        <div class="features">
+            <p>🌱 Crop Recommendation & Yield Prediction</p>
+            <p>🦠 Disease Detection with ML Models</p>
+            <p>💧 Smart Irrigation & Soil Health Monitoring</p>
+            <p>📈 Market Forecast & Subsidy Tracker</p>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="card">
+
+        <h3>Welcome back</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);">
+            Sign in to your AgriOS account
+        </p>
+
+        <form method="POST" action="/login">
+            <label>Email / Phone</label>
+            <input type="text" name="username" required>
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+
+            <button class="btn">Sign In to AgriOS →</button>
+        </form>
+
+        <div class="links">
+            <p><a href="/register">New user? Sign up</a></p>
+            <p><a href="/admin-login">Admin Login</a></p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

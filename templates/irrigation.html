@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Irrigation Advisory</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div style="padding:15px;">
+    <a href="/dashboard" style="
+        background:linear-gradient(90deg,#3D6B2C,#5A9B3A);
+        color:white;
+        padding:8px 14px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:600;
+        font-family:'DM Sans';
+    ">
+        ← Back to Dashboard
+    </a>
+</div>
+
+<style>
+
+/* GLOBAL */
+body{
+    font-family:'DM Sans', sans-serif;
+    background: radial-gradient(circle at top left,#2D4A1E,#1A1208);
+    padding:40px;
+    color:#FFFFFF;
+}
+
+/* TITLE */
+h2{
+    font-family:'Syne';
+    font-weight:800;
+    letter-spacing:-1px;
+    color:#FFFFFF;
+}
+
+/* CONTAINER (GLASS UI) */
+.container{
+    background: rgba(255,255,255,0.04);
+    padding:25px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+    max-width:900px;
+}
+
+/* ROW */
+.row{
+    display:flex;
+    gap:15px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+/* INPUT + SELECT */
+input,select{
+    padding:12px;
+    width:200px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.06);
+    color:white;
+    font-family:'DM Sans';
+}
+
+/* INPUT FOCUS */
+input:focus, select:focus{
+    outline:none;
+    border-color:#5A9B3A;
+    background:rgba(90,155,58,0.08);
+    box-shadow:0 0 0 3px rgba(90,155,58,0.12);
+}
+
+/* BUTTON */
+button{
+    background: linear-gradient(90deg,#3D6B2C,#5A9B3A);
+    color:white;
+    border:none;
+    padding:12px 25px;
+    cursor:pointer;
+    border-radius:10px;
+    font-family:'Syne';
+    font-weight:700;
+    letter-spacing:0.3px;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+/* RESULT CARD */
+.result{
+    margin-top:20px;
+    padding:18px;
+    background: rgba(143,202,106,0.06);
+    border:1px solid rgba(143,202,106,0.2);
+    border-radius:14px;
+    font-size:18px;
+    font-family:'DM Sans';
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>💧 Smart Irrigation Advisory</h2>
+
+<div class="container">
+<form method="POST">
+
+<div class="row">
+<input type="number" step="any" name="soil" placeholder="Soil Moisture (%)" required>
+
+<input type="number" step="any" name="rainfall" placeholder="Rainfall (mm)" required>
+
+<select name="season" required>
+    <option value="">Select Season</option>
+    <option value="kharif">Kharif</option>
+    <option value="rabi">Rabi</option>
+    <option value="summer">Summer</option>
+</select>
+
+<select name="crop" required>
+    <option value="">Select Crop</option>
+    <option value="rice">Rice</option>
+    <option value="maize">Maize</option>
+    <option value="wheat">Wheat</option>
+    <option value="cotton">Cotton</option>
+    <option value="sugarcane">Sugarcane</option>
+</select>
+
+<select name="district" required>
+    <option value="">Select District</option>
+    {% for d in districts %}
+        <option value="{{ d }}">{{ d }}</option>
+    {% endfor %}
+</select>
+
+<button type="submit">Get Irrigation Advice</button>
+
+</div>
+</form>
+
+{% if water %}
+<div class="result">
+💧 Water Required: {{ water }} mm<br>
+🌱 Recommendation: {{ status }}<br>
+🌾 Crop: {{ crop }}
+</div>
+{% endif %}
+
+</div>
+</body>
+</html>

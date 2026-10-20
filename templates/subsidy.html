@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Agriculture Subsidies & Schemes</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div style="padding:15px;">
+    <a href="/dashboard" style="
+        background:linear-gradient(90deg,#3D6B2C,#5A9B3A);
+        color:white;
+        padding:8px 14px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:600;
+        font-family:'DM Sans';
+    ">
+        ← Back to Dashboard
+    </a>
+</div>
+
+<style>
+
+/* GLOBAL */
+body{
+    font-family:'DM Sans', sans-serif;
+    background: radial-gradient(circle at top left,#2D4A1E,#1A1208);
+    margin:0;
+    color:#FFFFFF;
+}
+
+/* HEADER */
+.header{
+    background: rgba(255,255,255,0.05);
+    color:white;
+    padding:25px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.header h1{
+    margin:0;
+    font-family:'Syne';
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+/* CONTAINER */
+.container{
+    width:90%;
+    margin:30px auto;
+}
+
+/* SEARCH BOX */
+.search-box{
+    background: rgba(255,255,255,0.04);
+    padding:15px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+    margin-bottom:25px;
+}
+
+.search-box input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.06);
+    color:white;
+}
+
+/* INPUT FOCUS */
+.search-box input:focus{
+    outline:none;
+    border-color:#5A9B3A;
+    background:rgba(90,155,58,0.08);
+    box-shadow:0 0 0 3px rgba(90,155,58,0.12);
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+/* CARD */
+.card{
+    background: rgba(255,255,255,0.04);
+    padding:20px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+/* CARD TITLE */
+.card h3{
+    font-family:'Syne';
+    color:#8FCA6A;
+    margin-bottom:8px;
+}
+
+/* BADGE */
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:10px;
+    font-size:12px;
+    margin-top:5px;
+    background: rgba(143,202,106,0.1);
+    color:#8FCA6A;
+}
+
+/* LINKS */
+a{
+    display:inline-block;
+    margin-top:10px;
+    text-decoration:none;
+    color:#8FCA6A;
+    font-weight:600;
+}
+
+a:hover{
+    opacity:0.8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Government Agriculture Subsidies & Schemes</h1>
+<p>Central and state agriculture support programs for farmers</p>
+</div>
+
+<div class="container">
+
+<div class="search-box">
+<input placeholder="Search scheme (UI demo)">
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h3>PM Kisan Samman Nidhi</h3>
+<p>Direct income support of ₹6000 per year to farmers.</p>
+<span class="badge active">Active</span>
+<br>
+<a href="https://pmkisan.gov.in" target="_blank">Know More →</a>
+</div>
+
+<div class="card">
+<h3>Pradhan Mantri Fasal Bima Yojana</h3>
+<p>Insurance protection against crop failure.</p>
+<span class="badge active">Active</span>
+<br>
+<a href="https://pmfby.gov.in" target="_blank">Know More →</a>
+</div>
+
+<div class="card">
+<h3>PM Krishi Sinchai Yojana</h3>
+<p>Improves irrigation efficiency across farms.</p>
+<span class="badge active">Active</span>
+<br>
+<a href="https://pmksy.gov.in" target="_blank">Know More →</a>
+</div>
+
+<div class="card">
+<h3>Sub-Mission on Agricultural Mechanization</h3>
+<p>Subsidy for tractors and farm machinery.</p>
+<span class="badge active">Active</span>
+<br>
+<a href="https://agrimachinery.nic.in" target="_blank">Know More →</a>
+</div>
+
+<div class="card">
+<h3>National Food Security Mission</h3>
+<p>Supports production of staple crops.</p>
+<span class="badge active">Active</span>
+<br>
+<a href="https://nfsm.gov.in" target="_blank">Know More →</a>
+</div>
+
+<div class="card">
+<h3>Soil Health Card Scheme</h3>
+<p>Soil nutrient analysis and recommendations.</p>
+<span class="badge active">Active</span>
+<br>
+<a href="https://soilhealth.dac.gov.in" target="_blank">Know More →</a>
+</div>
+
+<div class="card">
+<h3>Paramparagat Krishi Vikas Yojana</h3>
+<p>Organic farming promotion scheme.</p>
+<span class="badge active">Active</span>
+<br>
+<a href="https://pgsindia-ncof.gov.in" target="_blank">Know More →</a>
+</div>
+
+<div class="card">
+<h3>National Mission on Sustainable Agriculture</h3>
+<p>Climate-resilient agriculture initiatives.</p>
+<span class="badge active">Ongoing</span>
+<br>
+<a href="https://nmsa.dac.gov.in" target="_blank">Know More →</a>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

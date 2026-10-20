@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Crop Disease Detection</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div style="padding:15px;">
+    <a href="/dashboard" style="
+        background:linear-gradient(90deg,#3D6B2C,#5A9B3A);
+        color:white;
+        padding:8px 14px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:600;
+        font-family:'DM Sans';
+    ">
+        ← Back to Dashboard
+    </a>
+</div>
+
+<script src="{{ url_for('static', filename='js/feedback.js') }}"></script>
+
+<style>
+
+/* GLOBAL */
+body{
+    font-family:'DM Sans', sans-serif;
+    background: radial-gradient(circle at top left,#2D4A1E,#1A1208);
+    padding:30px;
+    color:#FFFFFF;
+}
+
+/* TITLE */
+h2{
+    font-family:'Syne';
+    font-weight:800;
+    letter-spacing:-1px;
+    color:#FFFFFF;
+}
+
+/* CARD (GLASS) */
+.card{
+    background: rgba(255,255,255,0.04);
+    padding:25px;
+    border-radius:20px;
+    width:480px;
+    border:1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+}
+
+/* FILE INPUT */
+input[type="file"]{
+    padding:10px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.06);
+    color:white;
+    font-family:'DM Sans';
+}
+
+/* BUTTON */
+button{
+    background: linear-gradient(90deg,#3D6B2C,#5A9B3A);
+    color:white;
+    border:none;
+    padding:10px 18px;
+    cursor:pointer;
+    border-radius:10px;
+    margin-top:12px;
+    font-family:'Syne';
+    font-weight:700;
+    letter-spacing:0.3px;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+/* ERROR */
+.error{
+    color:#ff6b6b;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+/* WARNING */
+.warning{
+    color:#ffc107;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* RESULT CARD */
+.result{
+    margin-top:15px;
+    padding:15px;
+    background: rgba(143,202,106,0.06);
+    border:1px solid rgba(143,202,106,0.2);
+    border-radius:14px;
+    font-size:15px;
+}
+
+/* IMAGE */
+img{
+    border-radius:10px;
+    margin-top:10px;
+    border:2px solid rgba(255,255,255,0.2);
+}
+
+/* FEEDBACK BUTTONS */
+#feedback-section button{
+    margin:4px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>🦠 Crop Disease Detection</h2>
+
+<div class="card">
+
+<form method="POST" action="/disease" enctype="multipart/form-data">
+    <input type="file" name="leaf" accept="image/*" required>
+    <br>
+    <button type="submit">Detect Disease</button>
+</form>
+
+{% if error %}
+    <div class="error">{{ error }}</div>
+{% endif %}
+
+{% if warning %}
+    <div class="warning">{{ warning }}</div>
+{% endif %}
+
+{% if predictions %}
+<hr>
+
+<div id="feedback-section">
+    <h4>Rate this response:</h4>
+
+    <button onclick="submitFeedback(1)">⭐</button>
+    <button onclick="submitFeedback(2)">⭐⭐</button>
+    <button onclick="submitFeedback(3)">⭐⭐⭐</button>
+    <button onclick="submitFeedback(4)">⭐⭐⭐⭐</button>
+    <button onclick="submitFeedback(5)">⭐⭐⭐⭐⭐</button>
+
+    <br><br>
+
+    <label>Was this correct?</label>
+    <button onclick="markCorrect(true)">✅ Yes</button>
+    <button onclick="markCorrect(false)">❌ No</button>
+</div>
+
+<script>
+window.lastUserInput = "Disease Detection";
+window.lastAIResponse = "{{ predictions[0].name if predictions else '' }}";
+</script>
+
+<div class="result">
+    <h3>🦠 Top Disease Predictions</h3>
+    <ol>
+        {% for p in predictions %}
+        <li>
+            <strong>{{ p.name }}</strong> — {{ p.confidence }}%
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+{% endif %}
+
+{% if heatmap_image %}
+<div class="result">
+    <h3>🔥 Grad-CAM Explanation</h3>
+    <img src="/{{ heatmap_image }}" width="300" alt="GradCAM heatmap">
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>

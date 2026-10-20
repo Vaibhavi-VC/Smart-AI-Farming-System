@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Yield Prediction</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div style="padding:15px;">
+    <a href="/dashboard" style="
+        background:linear-gradient(90deg,#3D6B2C,#5A9B3A);
+        color:white;
+        padding:8px 14px;
+        border-radius:8px;
+        text-decoration:none;
+        font-weight:600;
+        font-family:'DM Sans';
+    ">
+        ← Back to Dashboard
+    </a>
+</div>
+
+<style>
+
+/* GLOBAL */
+body{
+    font-family:'DM Sans', sans-serif;
+    background: radial-gradient(circle at top left,#2D4A1E,#1A1208);
+    color:#FFFFFF;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+/* CARD (GLASS UI) */
+.card {
+    background: rgba(255,255,255,0.04);
+    border-radius: 20px;
+    padding: 30px;
+    border:1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+}
+
+/* TITLE */
+.card h2 {
+    font-family:'Syne';
+    font-weight:800;
+    letter-spacing:-1px;
+    color:#FFFFFF;
+    margin-bottom: 20px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* INPUT + SELECT */
+input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.06);
+    color:white;
+    font-family:'DM Sans';
+}
+
+/* FOCUS */
+input:focus, select:focus{
+    outline:none;
+    border-color:#5A9B3A;
+    background:rgba(90,155,58,0.08);
+    box-shadow:0 0 0 3px rgba(90,155,58,0.12);
+}
+
+/* BUTTON */
+button {
+    margin-top: 20px;
+    background: linear-gradient(90deg,#3D6B2C,#5A9B3A);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 12px;
+    font-family:'Syne';
+    font-weight:700;
+    letter-spacing:0.3px;
+    cursor: pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+/* RESULT */
+.result {
+    margin-top: 20px;
+    padding:18px;
+    border-radius:14px;
+    background: rgba(143,202,106,0.06);
+    border:1px solid rgba(143,202,106,0.2);
+    font-size: 20px;
+    color:#8FCA6A;
+    font-family:'DM Sans';
+}
+
+/* FEEDBACK BUTTONS */
+#feedback-section button{
+    margin:4px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <h2>Yield Prediction</h2>
+
+    <form method="post">
+      <div class="grid">
+
+        <select name="crop" required>
+          {% for c in crops %}
+            <option value="{{ c }}">{{ c }}</option>
+          {% endfor %}
+        </select>
+
+        <input name="year" placeholder="Year" required>
+
+        <select name="season" required>
+          {% for s in seasons %}
+            <option value="{{ s }}">{{ s }}</option>
+          {% endfor %}
+        </select>
+
+        <select name="state" required>
+          {% for st in states %}
+            <option value="{{ st }}">{{ st }}</option>
+          {% endfor %}
+        </select>
+
+        <input name="area" placeholder="Area (ha)" required>
+        <input name="production" placeholder="Production" required>
+        <input name="rain" placeholder="Rainfall" required>
+        <input name="fertilizer" placeholder="Fertilizer" required>
+        <input name="pesticide" placeholder="Pesticide" required>
+
+      </div>
+
+      <button type="submit">Predict Yield</button>
+    </form>
+
+    {% if result %}
+    <hr>
+
+<div id="feedback-section">
+    <h4>Rate this prediction:</h4>
+
+    <button onclick="submitFeedback(1)">⭐</button>
+    <button onclick="submitFeedback(2)">⭐⭐</button>
+    <button onclick="submitFeedback(3)">⭐⭐⭐</button>
+    <button onclick="submitFeedback(4)">⭐⭐⭐⭐</button>
+    <button onclick="submitFeedback(5)">⭐⭐⭐⭐⭐</button>
+
+    <br><br>
+
+    <label>Was this accurate?</label>
+    <button onclick="markCorrect(true)">✅ Yes</button>
+    <button onclick="markCorrect(false)">❌ No</button>
+</div>
+
+<script>
+window.lastUserInput = "Yield Prediction";
+window.lastAIResponse = "{{ result }}";
+</script>
+
+      <div class="result">
+        🌾 Predicted Yield: {{ result | round(2) }}
+      </div>
+    {% endif %}
+
+  </div>
+
+<script src="{{ url_for('static', filename='js/feedback.js') }}"></script>  
+
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'DM Sans', sans-serif;
+    background: radial-gradient(circle at top left, #2D4A1E, #1A1208);
+    color:white;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* CARD */
+.card{
+    width:380px;
+    padding:35px;
+    border-radius:24px;
+    background: rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.09);
+    backdrop-filter:blur(20px);
+}
+
+/* BADGE */
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    background:rgba(212,168,67,0.08);
+    border:1px solid rgba(212,168,67,0.20);
+    font-size:11px;
+    margin-bottom:10px;
+}
+
+/* TITLE */
+h2{
+    font-family:'Syne';
+    font-weight:800;
+    letter-spacing:-0.5px;
+}
+
+.sub{
+    font-size:13px;
+    color:rgba(255,255,255,0.4);
+    margin-bottom:20px;
+}
+
+/* LABEL */
+label{
+    font-size:11.5px;
+    letter-spacing:0.8px;
+    color:rgba(255,255,255,0.5);
+}
+
+/* INPUT */
+input{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    margin-bottom:16px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.06);
+    color:white;
+}
+
+input:focus{
+    outline:none;
+    border-color:#D4A843;
+    background:rgba(212,168,67,0.08);
+    box-shadow:0 0 0 3px rgba(212,168,67,0.12);
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#3D6B2C,#5A9B3A);
+    color:white;
+    font-family:'Syne';
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+/* FOOTER */
+.footer{
+    margin-top:15px;
+    text-align:center;
+    font-size:12px;
+    color:rgba(255,255,255,0.5);
+}
+
+.footer a{
+    color:#8FCA6A;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="badge">● ADMIN PORTAL</div>
+
+<h2>Admin Login</h2>
+<p class="sub">Smart Farming Dashboard</p>
+
+<form method="POST" action="/admin-login">
+<label>ADMIN USERNAME</label>
+<input type="text" name="username" required>
+
+<label>PASSWORD</label>
+<input type="password" name="password" required>
+
+<button>Login to Dashboard →</button>
+</form>
+
+<div class="footer">
+    <a href="/" class="back-btn">← Back to Home</a>
+<p><a href="/">← Back to Home</a></p>
+<p>🔒 Secured with end-to-end encryption</p>
+</div>
+
+</div>
+
+</body>
+</html>

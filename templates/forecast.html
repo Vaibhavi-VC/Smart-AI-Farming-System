@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Market Price Forecast</title>
+
+<!-- FONTS -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* GLOBAL */
+body {
+    background: radial-gradient(circle at top left,#2D4A1E,#1A1208);
+    font-family: 'DM Sans', sans-serif;
+    color:#FFFFFF;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 700px;
+    margin: 50px auto;
+}
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.04);
+    padding: 30px;
+    border-radius: 20px;
+    border:1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(20px);
+}
+
+/* TITLE */
+h2 {
+    font-family:'Syne';
+    font-weight:800;
+    letter-spacing:-1px;
+    color:#FFFFFF;
+    margin-bottom: 20px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(255,255,255,0.06);
+    color:white;
+}
+
+input:focus{
+    outline:none;
+    border-color:#5A9B3A;
+    background:rgba(90,155,58,0.08);
+    box-shadow:0 0 0 3px rgba(90,155,58,0.12);
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family:'Syne';
+    font-weight:700;
+    background: linear-gradient(90deg,#3D6B2C,#5A9B3A);
+    color: white;
+}
+
+/* RESULT */
+.result-box {
+    margin-top: 25px;
+    background: rgba(143,202,106,0.06);
+    padding: 15px;
+    border-radius: 14px;
+    border:1px solid rgba(143,202,106,0.2);
+}
+
+.result-box h3 {
+    font-family:'Syne';
+    color:#8FCA6A;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    display: inline-block;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg,#3D6B2C,#5A9B3A);
+    color:white;
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+/* DROPDOWN */
+#dropdownList {
+    background: #1e2b1a;
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:10px;
+    color:white;
+    z-index:9999;
+}
+
+#dropdownList div{
+    padding:10px;
+    cursor:pointer;
+    color:white;
+}
+
+#dropdownList div:hover {
+    background: rgba(90,155,58,0.3);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
+
+    <h2>Market Price Forecast</h2>
+
+    <form method="post">
+
+      <div style="position: relative;">
+        <input type="text" id="searchBox" placeholder="Search crop..." autocomplete="off">
+
+        <div id="dropdownList" style="
+            position:absolute;
+            width:100%;
+            max-height:200px;
+            overflow-y:auto;
+            display:none;">
+        </div>
+      </div>
+
+      <input type="hidden" name="commodity" id="selectedCommodity">
+
+      <button type="submit">Get Forecast</button>
+
+    </form>
+
+    {% if data %}
+      <div class="result-box">
+        <h3>Market Details</h3>
+        <ul>
+          <li><b>Commodity:</b> {{ data.commodity }}</li>
+          <li><b>Mandi:</b> {{ data.mandi_location }}</li>
+          <li><b>Date:</b> {{ data.date }}</li>
+          <li><b>Min Price:</b> ₹ {{ data.min_price }}</li>
+          <li><b>Max Price:</b> ₹ {{ data.max_price }}</li>
+          <li><b>Modal Price:</b> ₹ {{ data.modal_price }}</li>
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if prediction %}
+    <hr>
+
+<script>
+window.lastUserInput = "Market Price Prediction";
+window.lastAIResponse = "{{ prediction }}";
+</script>
+
+      <div class="result-box">
+        <h3>Predicted Future Price</h3>
+        <p><b>₹ {{ prediction }}</b></p>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/feedback.js') }}"></script>
+
+<!-- ✅ DROPDOWN FIX (THIS WAS MISSING / BROKEN) -->
+<script>
+let commodities = JSON.parse('{{ commodities | tojson | safe }}');
+let dropdown = document.getElementById("dropdownList");
+let input = document.getElementById("searchBox");
+let hiddenInput = document.getElementById("selectedCommodity");
+
+input.addEventListener("focus", () => showList(commodities));
+
+input.addEventListener("keyup", () => {
+    let value = input.value.toLowerCase();
+    let filtered = commodities.filter(c => c.toLowerCase().includes(value));
+    showList(filtered);
+});
+
+function showList(list) {
+    dropdown.innerHTML = "";
+    dropdown.style.display = "block";
+
+    list.forEach(item => {
+        let div = document.createElement("div");
+        div.innerText = item;
+
+        div.onclick = () => {
+            input.value = item;
+            hiddenInput.value = item;
+            dropdown.style.display = "none";
+        };
+
+        dropdown.appendChild(div);
+    });
+}
+
+document.addEventListener("click", function(e) {
+    if (!e.target.closest("#searchBox") && !e.target.closest("#dropdownList")) {
+        dropdown.style.display = "none";
+    }
+});
+</script>
+
+</body>
+</html>
